@@ -18,6 +18,9 @@
             overflow: hidden;
             height: 100vh;
             position: relative;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
         }
 
         body::before {
@@ -95,6 +98,8 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
         }
 
         .thumbnail {
@@ -617,16 +622,19 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.95);
             z-index: 1000;
             align-items: center;
             justify-content: center;
+            touch-action: manipulation;
         }
 
         .zoom-modal img {
             max-width: 90%;
             max-height: 90%;
             border-radius: 10px;
+            transition: transform 0.3s ease;
+            cursor: zoom-out;
         }
 
         .close-zoom {
@@ -636,9 +644,181 @@
             color: white;
             font-size: 30px;
             cursor: pointer;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+            user-select: none;
         }
 
+        .close-zoom:hover {
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        /* Mobile zoom modal improvements */
         @media (max-width: 768px) {
+            .zoom-modal img {
+                max-width: 95%;
+                max-height: 85%;
+                margin-top: 20px;
+            }
+            
+            .close-zoom {
+                top: 10px;
+                right: 10px;
+                width: 44px;
+                height: 44px;
+                font-size: 24px;
+                background: rgba(0, 0, 0, 0.7);
+            }
+        }
+
+        /* Responsive Design - Mobile First Approach */
+        
+        /* Extra Small Devices (phones, less than 576px) */
+        @media (max-width: 575px) {
+            body {
+                font-size: 14px;
+            }
+            
+            .presentation-container {
+                flex-direction: column;
+                height: 100vh;
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: auto;
+                max-height: 150px;
+                padding: 15px 10px;
+                overflow-y: visible;
+                order: 2;
+            }
+            
+            .sorigin-logo {
+                width: 120px;
+                margin-bottom: 15px;
+            }
+            
+            .sidebar h2 {
+                font-size: 14px;
+                margin-bottom: 15px;
+                text-align: center;
+            }
+            
+            .slide-thumbnails {
+                flex-direction: row;
+                overflow-x: auto;
+                gap: 8px;
+                padding-bottom: 5px;
+            }
+            
+            .thumbnail {
+                min-width: 120px;
+                padding: 8px;
+                flex-shrink: 0;
+            }
+            
+            .thumbnail-title {
+                font-size: 12px;
+            }
+            
+            .thumbnail-desc {
+                font-size: 10px;
+            }
+            
+            .main-content {
+                order: 1;
+                flex: 1;
+            }
+            
+            .slide-container {
+                padding: 15px;
+            }
+            
+            .slide {
+                height: auto;
+                min-height: 400px;
+                padding: 20px;
+                max-width: 100%;
+            }
+            
+            .slide-title {
+                font-size: 1.8em;
+                margin-bottom: 10px;
+            }
+            
+            .slide-subtitle {
+                font-size: 1em;
+            }
+            
+            .slide-content {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            
+            .slide-image {
+                flex: none;
+                padding: 10px;
+            }
+            
+            .slide-image img {
+                max-height: 250px;
+            }
+            
+            .slide-text {
+                flex: none;
+                padding-left: 0;
+            }
+            
+            .slide-text h3 {
+                font-size: 1.2em;
+                margin-bottom: 15px;
+            }
+            
+            .slide-text p {
+                font-size: 14px;
+                margin-bottom: 12px;
+            }
+            
+            .slide-text li {
+                font-size: 13px;
+                margin-bottom: 8px;
+            }
+            
+            .controls {
+                position: fixed;
+                bottom: 10px;
+                left: 50%;
+                transform: translateX(-50%);
+                gap: 8px;
+                z-index: 100;
+            }
+            
+            .nav-btn {
+                padding: 10px 15px;
+                font-size: 14px;
+                border-radius: 20px;
+            }
+            
+            .slide-indicator {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+            
+            .fullscreen-btn {
+                padding: 10px !important;
+                min-width: 40px !important;
+            }
+        }
+        
+        /* Small Devices (landscape phones, 576px and up) */
+        @media (min-width: 576px) and (max-width: 767px) {
             .presentation-container {
                 flex-direction: column;
             }
@@ -646,22 +826,275 @@
             .sidebar {
                 width: 100%;
                 height: auto;
-                max-height: 200px;
+                max-height: 180px;
+                padding: 20px 15px;
+            }
+            
+            .sorigin-logo {
+                width: 150px;
+            }
+            
+            .sidebar h2 {
+                font-size: 16px;
             }
             
             .slide-thumbnails {
                 flex-direction: row;
                 overflow-x: auto;
+                gap: 10px;
+            }
+            
+            .thumbnail {
+                min-width: 140px;
+                flex-shrink: 0;
+            }
+            
+            .main-content {
+                flex: 1;
+            }
+            
+            .slide-container {
+                padding: 25px;
+            }
+            
+            .slide {
+                height: auto;
+                min-height: 500px;
+                padding: 30px;
+            }
+            
+            .slide-title {
+                font-size: 2.2em;
+            }
+            
+            .slide-subtitle {
+                font-size: 1.1em;
             }
             
             .slide-content {
                 flex-direction: column;
+                gap: 25px;
                 text-align: center;
             }
             
+            .slide-image {
+                flex: none;
+            }
+            
+            .slide-image img {
+                max-height: 300px;
+            }
+            
             .slide-text {
+                flex: none;
                 padding-left: 0;
-                padding-top: 20px;
+            }
+            
+            .controls {
+                bottom: 15px;
+                gap: 10px;
+            }
+        }
+        
+        /* Medium Devices (tablets, 768px and up) */
+        @media (min-width: 768px) and (max-width: 991px) {
+            .sidebar {
+                width: 280px;
+            }
+            
+            .sorigin-logo {
+                width: 180px;
+            }
+            
+            .slide {
+                height: auto;
+                min-height: 600px;
+                padding: 35px;
+            }
+            
+            .slide-title {
+                font-size: 2.4em;
+            }
+            
+            .slide-content {
+                gap: 30px;
+            }
+            
+            .slide-image {
+                flex: 0 0 55%;
+            }
+            
+            .slide-image img {
+                max-height: 350px;
+            }
+            
+            .slide-text {
+                flex: 0 0 45%;
+            }
+        }
+        
+        /* Large Devices (desktops, 992px and up) */
+        @media (min-width: 992px) and (max-width: 1199px) {
+            .sidebar {
+                width: 320px;
+            }
+            
+            .slide {
+                max-width: 1000px;
+                height: 650px;
+            }
+            
+            .slide-title {
+                font-size: 2.6em;
+            }
+        }
+        
+        /* Extra Large Devices (large desktops, 1200px and up) */
+        @media (min-width: 1200px) {
+            .sidebar {
+                width: 350px;
+                padding: 30px 25px;
+            }
+            
+            .sorigin-logo {
+                width: 220px;
+            }
+            
+            .sidebar h2 {
+                font-size: 20px;
+            }
+            
+            .slide {
+                max-width: 1300px;
+                height: 700px;
+                padding: 50px;
+            }
+            
+            .slide-title {
+                font-size: 3.2em;
+            }
+            
+            .slide-subtitle {
+                font-size: 1.4em;
+            }
+            
+            .slide-text h3 {
+                font-size: 1.8em;
+            }
+            
+            .slide-text p {
+                font-size: 16px;
+                line-height: 1.8;
+            }
+            
+            .slide-text li {
+                font-size: 15px;
+                line-height: 1.7;
+            }
+        }
+        
+        /* Ultra Wide Screens (1400px and up) */
+        @media (min-width: 1400px) {
+            .slide {
+                max-width: 1400px;
+                height: 750px;
+            }
+            
+            .slide-container {
+                padding: 50px;
+            }
+        }
+        
+        /* Landscape Mobile Devices */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .sidebar {
+                display: none;
+            }
+            
+            .main-content {
+                width: 100%;
+            }
+            
+            .slide {
+                height: auto;
+                min-height: 350px;
+                padding: 20px;
+            }
+            
+            .slide-title {
+                font-size: 1.8em;
+                margin-bottom: 8px;
+            }
+            
+            .slide-subtitle {
+                font-size: 1em;
+            }
+            
+            .slide-content {
+                gap: 20px;
+            }
+            
+            .slide-header {
+                margin-bottom: 15px;
+            }
+            
+            .controls {
+                bottom: 5px;
+            }
+            
+            .nav-btn {
+                padding: 8px 15px;
+                font-size: 13px;
+            }
+        }
+        
+        /* High DPI Displays */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .slide-image img {
+                image-rendering: -webkit-optimize-contrast;
+                image-rendering: crisp-edges;
+            }
+        }
+        
+        /* Accessibility - Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        /* Print Styles */
+        @media print {
+            .sidebar,
+            .controls,
+            .fullscreen-notification,
+            .zoom-modal {
+                display: none !important;
+            }
+            
+            .main-content {
+                width: 100% !important;
+            }
+            
+            .slide {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                height: auto !important;
+                max-width: 100% !important;
+                margin-bottom: 20px;
+                border: 1px solid #000;
+            }
+            
+            .slide-title,
+            .slide-text h3 {
+                color: #000 !important;
+            }
+            
+            body::before,
+            .slide::before {
+                display: none !important;
             }
         }
     </style>
@@ -1260,25 +1693,50 @@
             }
         }
 
-        // Touch/swipe support for mobile
+        // Enhanced Touch/swipe support for mobile
         let touchStartX = 0;
         let touchEndX = 0;
+        let touchStartY = 0;
+        let touchEndY = 0;
+        let isSwiping = false;
 
         document.addEventListener('touchstart', (e) => {
             touchStartX = e.changedTouches[0].screenX;
-        });
+            touchStartY = e.changedTouches[0].screenY;
+            isSwiping = false;
+        }, { passive: true });
+
+        document.addEventListener('touchmove', (e) => {
+            if (!isSwiping) {
+                const currentX = e.changedTouches[0].screenX;
+                const currentY = e.changedTouches[0].screenY;
+                const diffX = Math.abs(currentX - touchStartX);
+                const diffY = Math.abs(currentY - touchStartY);
+                
+                // Only prevent default if it's a horizontal swipe
+                if (diffX > diffY && diffX > 10) {
+                    isSwiping = true;
+                    e.preventDefault();
+                }
+            }
+        }, { passive: false });
 
         document.addEventListener('touchend', (e) => {
             touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        });
+            touchEndY = e.changedTouches[0].screenY;
+            if (isSwiping) {
+                handleSwipe();
+            }
+        }, { passive: true });
 
         function handleSwipe() {
             const swipeThreshold = 50;
-            const diff = touchStartX - touchEndX;
+            const diffX = touchStartX - touchEndX;
+            const diffY = Math.abs(touchStartY - touchEndY);
 
-            if (Math.abs(diff) > swipeThreshold) {
-                if (diff > 0) {
+            // Only process horizontal swipes
+            if (Math.abs(diffX) > swipeThreshold && Math.abs(diffX) > diffY) {
+                if (diffX > 0) {
                     // Swiped left - next slide
                     changeSlide(1);
                 } else {
@@ -1288,8 +1746,56 @@
             }
         }
 
+        // Responsive navigation adjustments
+        function updateNavigationForScreenSize() {
+            const screenWidth = window.innerWidth;
+            const controls = document.querySelector('.controls');
+            const navButtons = document.querySelectorAll('.nav-btn');
+            
+            if (screenWidth < 576) {
+                // Extra small screens - compact buttons
+                navButtons.forEach(btn => {
+                    if (!btn.classList.contains('fullscreen-btn')) {
+                        btn.style.padding = '8px 12px';
+                        btn.style.fontSize = '13px';
+                    }
+                });
+            } else if (screenWidth < 768) {
+                // Small screens - medium buttons
+                navButtons.forEach(btn => {
+                    if (!btn.classList.contains('fullscreen-btn')) {
+                        btn.style.padding = '10px 16px';
+                        btn.style.fontSize = '14px';
+                    }
+                });
+            } else {
+                // Reset to default for larger screens
+                navButtons.forEach(btn => {
+                    btn.style.padding = '';
+                    btn.style.fontSize = '';
+                });
+            }
+        }
+
+        // Handle orientation changes
+        function handleOrientationChange() {
+            setTimeout(() => {
+                updateNavigationForScreenSize();
+                // Force a repaint to handle orientation change issues
+                document.body.style.height = '100vh';
+                setTimeout(() => {
+                    document.body.style.height = '';
+                }, 100);
+            }, 100);
+        }
+
+        // Listen for resize and orientation changes
+        window.addEventListener('resize', updateNavigationForScreenSize);
+        window.addEventListener('orientationchange', handleOrientationChange);
+
         // Initialize
         showSlide(0);
+        updateNavigationForScreenSize();
 
         // Create floating particles for futuristic effect
         function createParticles() {
