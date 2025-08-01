@@ -679,10 +679,61 @@
 
         /* Responsive Design - Mobile First Approach */
         
+        /* 3D Graph Responsive Styles */
+        @media (max-width: 768px) {
+            .graph-3d-scene {
+                height: 300px !important;
+            }
+            
+            .graph-base {
+                width: 280px !important;
+                height: 200px !important;
+            }
+            
+            .y-axis {
+                height: 150px !important;
+                left: calc(50% - 140px) !important;
+                top: calc(50% - 75px) !important;
+            }
+            
+            .x-axis {
+                width: 240px !important;
+                left: calc(50% - 120px) !important;
+                top: calc(50% + 75px) !important;
+            }
+            
+            .data-bar {
+                width: 30px !important;
+            }
+            
+            .data-bar:nth-child(7) { height: 90px !important; left: calc(50% - 105px) !important; top: calc(50% - 15px) !important; }
+            .data-bar:nth-child(8) { height: 60px !important; left: calc(50% - 45px) !important; top: calc(50% + 15px) !important; }
+            .data-bar:nth-child(9) { height: 105px !important; left: calc(50% + 15px) !important; top: calc(50% - 30px) !important; }
+            .data-bar:nth-child(10) { height: 75px !important; left: calc(50% + 75px) !important; top: calc(50% + 0px) !important; }
+        }
+
         /* Extra Small Devices (phones, less than 576px) */
         @media (max-width: 575px) {
             body {
                 font-size: 14px;
+            }
+            
+            .graph-3d-scene {
+                height: 250px !important;
+            }
+            
+            .graph-container {
+                transform: rotateX(10deg) rotateY(-5deg) translateZ(0px) !important;
+            }
+            
+            .graph-base {
+                width: 220px !important;
+                height: 160px !important;
+            }
+            
+            .graph-title {
+                font-size: 14px !important;
+                top: 10px !important;
             }
             
             .presentation-container {
@@ -1004,6 +1055,129 @@
                 padding: 50px;
             }
         }
+
+        /* 3D Graph Animation Effects */
+        .graph-3d-container:hover {
+            transform: rotateX(8deg) rotateY(-8deg) translateZ(30px) !important;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+
+        .graph-3d-container:hover img {
+            filter: blur(2px) contrast(1.4) brightness(0.9) saturate(1.3) !important;
+            box-shadow: 
+                0 0 50px rgba(82, 191, 157, 0.6),
+                0 20px 45px rgba(0, 0, 0, 0.4),
+                inset 0 0 40px rgba(255, 255, 255, 0.2),
+                0 0 80px rgba(166, 206, 57, 0.3) !important;
+        }
+
+        @keyframes graphPulse {
+            0%, 100% { 
+                box-shadow: 
+                    0 0 40px rgba(82, 191, 157, 0.4),
+                    0 15px 35px rgba(0, 0, 0, 0.3),
+                    inset 0 0 30px rgba(255, 255, 255, 0.15),
+                    0 0 60px rgba(166, 206, 57, 0.2);
+            }
+            50% { 
+                box-shadow: 
+                    0 0 50px rgba(82, 191, 157, 0.6),
+                    0 15px 35px rgba(0, 0, 0, 0.3),
+                    inset 0 0 40px rgba(255, 255, 255, 0.2),
+                    0 0 80px rgba(166, 206, 57, 0.3);
+            }
+        }
+
+        .graph-3d-container img {
+            animation: graphPulse 4s ease-in-out infinite;
+        }
+
+        @keyframes graphFloat {
+            0%, 100% { transform: rotateX(5deg) rotateY(-5deg) translateZ(20px) translateY(0px); }
+            50% { transform: rotateX(7deg) rotateY(-7deg) translateZ(25px) translateY(-5px); }
+        }
+
+        .graph-3d-container {
+            animation: graphFloat 6s ease-in-out infinite;
+        }
+
+        /* 3D Graph CSS Animations */
+        .graph-container {
+            animation: graph3DRotate 8s ease-in-out infinite;
+        }
+
+        @keyframes graph3DRotate {
+            0%, 100% { transform: rotateX(15deg) rotateY(-10deg) translateZ(0px); }
+            25% { transform: rotateX(20deg) rotateY(-15deg) translateZ(10px); }
+            50% { transform: rotateX(10deg) rotateY(-5deg) translateZ(5px); }
+            75% { transform: rotateX(18deg) rotateY(-12deg) translateZ(8px); }
+        }
+
+        .data-bar {
+            animation: barGrow 2s ease-out, barPulse 3s ease-in-out infinite 2s;
+            transform-origin: bottom center;
+        }
+
+        @keyframes barGrow {
+            0% { 
+                height: 0 !important;
+                opacity: 0;
+                transform: translateZ(0px) scaleY(0);
+            }
+            100% { 
+                opacity: 1;
+                transform: scaleY(1);
+            }
+        }
+
+        @keyframes barPulse {
+            0%, 100% { 
+                box-shadow: 0 0 15px rgba(82, 191, 157, 0.6);
+                transform: scaleY(1);
+            }
+            50% { 
+                box-shadow: 0 0 25px rgba(82, 191, 157, 0.8);
+                transform: scaleY(1.05);
+            }
+        }
+
+        .data-bar:nth-child(even) {
+            animation: barGrow 2s ease-out 0.3s both, barPulse 3s ease-in-out infinite 2.3s;
+        }
+
+        .data-bar:nth-child(odd) {
+            animation: barGrow 2s ease-out 0.6s both, barPulse 3s ease-in-out infinite 2.6s;
+        }
+
+        .graph-container:hover {
+            animation-play-state: paused;
+            transform: rotateX(25deg) rotateY(-20deg) translateZ(15px) !important;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .graph-container:hover .data-bar {
+            animation-play-state: paused;
+            transform: scaleY(1.1) !important;
+            box-shadow: 0 0 30px rgba(82, 191, 157, 0.9) !important;
+        }
+
+        .y-axis, .x-axis {
+            animation: axisGlow 4s ease-in-out infinite;
+        }
+
+        @keyframes axisGlow {
+            0%, 100% { box-shadow: 0 0 10px rgba(82, 191, 157, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(82, 191, 157, 0.8); }
+        }
+
+        .graph-base {
+            animation: baseGlow 5s ease-in-out infinite;
+        }
+
+        @keyframes baseGlow {
+            0%, 100% { box-shadow: 0 0 30px rgba(82, 191, 157, 0.2); }
+            50% { box-shadow: 0 0 40px rgba(82, 191, 157, 0.4); }
+        }
         
         /* Landscape Mobile Devices */
         @media (max-height: 500px) and (orientation: landscape) {
@@ -1288,35 +1462,39 @@
                 </linearGradient>
                 </defs>
             </svg>
-            <h2>AMS System Overview</h2>
+            <h2>AMS Wind Energy Platform</h2>
             <div class="slide-thumbnails">
                 <div class="thumbnail active" data-slide="0">
                     <div class="thumbnail-title">Introduction</div>
-                    <div class="thumbnail-desc">System Walkthrough</div>
+                    <div class="thumbnail-desc">Wind Energy Performance</div>
                 </div>
                 <div class="thumbnail" data-slide="1">
-                    <div class="thumbnail-title">Dashboard</div>
-                    <div class="thumbnail-desc">Main Interface</div>
+                    <div class="thumbnail-title">Overview</div>
+                    <div class="thumbnail-desc">Platform Modules</div>
                 </div>
                 <div class="thumbnail" data-slide="2">
-                    <div class="thumbnail-title">Core Features</div>
-                    <div class="thumbnail-desc">Data Management</div>
+                    <div class="thumbnail-title">Portfolio</div>
+                    <div class="thumbnail-desc">Asset Overview</div>
                 </div>
                 <div class="thumbnail" data-slide="3">
-                    <div class="thumbnail-title">UI Design</div>
-                    <div class="thumbnail-desc">Interface Elements</div>
+                    <div class="thumbnail-title">State Portfolio</div>
+                    <div class="thumbnail-desc">Regional Analysis</div>
                 </div>
                 <div class="thumbnail" data-slide="4">
-                    <div class="thumbnail-title">Advanced Tools</div>
-                    <div class="thumbnail-desc">Analytics & Reports</div>
+                    <div class="thumbnail-title">Site Portfolio</div>
+                    <div class="thumbnail-desc">Site-level Data</div>
                 </div>
                 <div class="thumbnail" data-slide="5">
-                    <div class="thumbnail-title">Configuration</div>
-                    <div class="thumbnail-desc">System Settings</div>
+                    <div class="thumbnail-title">WTG Monitoring</div>
+                    <div class="thumbnail-desc">Real-time Monitoring</div>
                 </div>
                 <div class="thumbnail" data-slide="6">
-                    <div class="thumbnail-title">Complete View</div>
-                    <div class="thumbnail-desc">System Summary</div>
+                    <div class="thumbnail-title">BD Analysis</div>
+                    <div class="thumbnail-desc">Downtime Diagnostics</div>
+                </div>
+                <div class="thumbnail" data-slide="7">
+                    <div class="thumbnail-title">Reports</div>
+                    <div class="thumbnail-desc">Data Export Tools</div>
                 </div>
             </div>
         </div>
@@ -1326,25 +1504,86 @@
                 <!-- Title Slide -->
                 <div class="slide active">
                     <div class="slide-header">
-                        <h1 class="slide-title">AMS System Walkthrough</h1>
-                        <p class="slide-subtitle">Complete Interface Overview & Feature Analysis</p>
+                        <h1 class="slide-title">AMS Platform – Wind Energy Performance</h1>
+                        <p class="slide-subtitle">Advanced Cloud-Based Asset Management System</p>
                     </div>
                     <div class="slide-content">
                         <div class="slide-image">
-                            <div class="image-container">
-                                <img src="img/Screenshot 2025-08-01 115418.png" alt="AMS System Preview" onclick="zoomImage(this)">
+                            <div class="graph-3d-scene" style="perspective: 1000px; transform-style: preserve-3d; width: 100%; height: 420px; position: relative;">
+                                <div class="graph-container" style="position: relative; width: 100%; height: 100%; transform: rotateX(15deg) rotateY(-10deg) translateZ(0px); transform-style: preserve-3d;">
+                                    
+                                    <!-- 3D Graph Base -->
+                                    <div class="graph-base" style="position: absolute; width: 350px; height: 250px; left: 50%; top: 50%; transform: translate(-50%, -50%) translateZ(-20px); 
+                                                                   background: linear-gradient(135deg, rgba(82, 191, 157, 0.1), rgba(166, 206, 57, 0.1)); 
+                                                                   border: 2px solid rgba(82, 191, 157, 0.3); border-radius: 15px;
+                                                                   box-shadow: 0 0 30px rgba(82, 191, 157, 0.2);">
+                                        
+                                        <!-- Grid Lines -->
+                                        <div class="grid-lines" style="position: absolute; width: 100%; height: 100%; 
+                                                                       background: repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(82, 191, 157, 0.2) 20px, rgba(82, 191, 157, 0.2) 21px),
+                                                                                   repeating-linear-gradient(90deg, transparent, transparent 25px, rgba(166, 206, 57, 0.2) 25px, rgba(166, 206, 57, 0.2) 26px);">
+                                        </div>
+                                    </div>
+
+                                    <!-- Y-Axis -->
+                                    <div class="y-axis" style="position: absolute; width: 3px; height: 200px; left: calc(50% - 175px); top: calc(50% - 100px); 
+                                                               background: linear-gradient(180deg, #52bf9d, #a6ce39); transform: translateZ(10px);
+                                                               box-shadow: 0 0 10px rgba(82, 191, 157, 0.5);">
+                                        <!-- Y-Axis Labels -->
+                                        <div style="position: absolute; left: -40px; top: 0; color: #52bf9d; font-size: 12px; font-weight: 600;">100MW</div>
+                                        <div style="position: absolute; left: -35px; top: 50px; color: #52bf9d; font-size: 12px; font-weight: 600;">75MW</div>
+                                        <div style="position: absolute; left: -35px; top: 100px; color: #52bf9d; font-size: 12px; font-weight: 600;">50MW</div>
+                                        <div style="position: absolute; left: -35px; top: 150px; color: #52bf9d; font-size: 12px; font-weight: 600;">25MW</div>
+                                        <div style="position: absolute; left: -25px; top: 200px; color: #52bf9d; font-size: 12px; font-weight: 600;">0MW</div>
+                                    </div>
+
+                                    <!-- X-Axis -->
+                                    <div class="x-axis" style="position: absolute; width: 300px; height: 3px; left: calc(50% - 150px); top: calc(50% + 100px); 
+                                                               background: linear-gradient(90deg, #52bf9d, #a6ce39); transform: translateZ(10px);
+                                                               box-shadow: 0 0 10px rgba(166, 206, 57, 0.5);">
+                                        <!-- X-Axis Labels -->
+                                        <div style="position: absolute; left: 0; top: 10px; color: #a6ce39; font-size: 12px; font-weight: 600;">Q1</div>
+                                        <div style="position: absolute; left: 75px; top: 10px; color: #a6ce39; font-size: 12px; font-weight: 600;">Q2</div>
+                                        <div style="position: absolute; left: 150px; top: 10px; color: #a6ce39; font-size: 12px; font-weight: 600;">Q3</div>
+                                        <div style="position: absolute; left: 225px; top: 10px; color: #a6ce39; font-weight: 600;">Q4</div>
+                                        <div style="position: absolute; left: 300px; top: 10px; color: #a6ce39; font-size: 12px; font-weight: 600;">2024</div>
+                                    </div>
+
+                                    <!-- Data Bars -->
+                                    <div class="data-bar" style="position: absolute; width: 40px; height: 120px; left: calc(50% - 130px); top: calc(50% - 20px); 
+                                                                  background: linear-gradient(180deg, #52bf9d, #4ab592); transform: translateZ(30px);
+                                                                  border-radius: 5px 5px 0 0; box-shadow: 0 0 15px rgba(82, 191, 157, 0.6);"></div>
+                                    
+                                    <div class="data-bar" style="position: absolute; width: 40px; height: 80px; left: calc(50% - 55px); top: calc(50% + 20px); 
+                                                                  background: linear-gradient(180deg, #a6ce39, #9bc235); transform: translateZ(35px);
+                                                                  border-radius: 5px 5px 0 0; box-shadow: 0 0 15px rgba(166, 206, 57, 0.6);"></div>
+                                    
+                                    <div class="data-bar" style="position: absolute; width: 40px; height: 140px; left: calc(50% + 20px); top: calc(50% - 40px); 
+                                                                  background: linear-gradient(180deg, #52bf9d, #4ab592); transform: translateZ(40px);
+                                                                  border-radius: 5px 5px 0 0; box-shadow: 0 0 15px rgba(82, 191, 157, 0.6);"></div>
+                                    
+                                    <div class="data-bar" style="position: absolute; width: 40px; height: 100px; left: calc(50% + 95px); top: calc(50% - 0px); 
+                                                                  background: linear-gradient(180deg, #a6ce39, #9bc235); transform: translateZ(45px);
+                                                                  border-radius: 5px 5px 0 0; box-shadow: 0 0 15px rgba(166, 206, 57, 0.6);"></div>
+
+                                    <!-- Graph Title -->
+                                    <div class="graph-title" style="position: absolute; left: 50%; top: 20px; transform: translateX(-50%) translateZ(50px); 
+                                                                   color: #1a4d3e; font-size: 16px; font-weight: 600; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+                                        Wind Energy Performance 2024
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="slide-text">
-                            <h3>AMS System Overview</h3>
-                            <p>Welcome to the Advanced Management System - a comprehensive solution for modern business operations.</p>
+                            <h3>Introduction</h3>
+                            <p>The Asset Management System (AMS) is an advanced, cloud-based platform designed to monitor, analyze, and optimize the performance of wind power assets across various regions.</p>
+                            <p>It provides visibility into:</p>
                             <ul>
-                                <li style="--item-delay: 0s">Dashboard & Navigation</li>
-                                <li style="--item-delay: 0.1s">Core Features & Tools</li>
-                                <li style="--item-delay: 0.2s">User Interface Design</li>
-                                <li style="--item-delay: 0.3s">System Configuration</li>
+                                <li style="--item-delay: 0s">KPIs and Performance Metrics</li>
+                                <li style="--item-delay: 0.1s">Turbine Health Monitoring</li>
+                                <li style="--item-delay: 0.2s">Site Revenue Analysis</li>
+                                <li style="--item-delay: 0.3s">Environmental Benefits Tracking</li>
                             </ul>
-
                         </div>
                     </div>
                 </div>
@@ -1352,26 +1591,27 @@
                 <!-- Slide 1 -->
                 <div class="slide">
                     <div class="slide-header">
-                        <h1 class="slide-title">System Overview</h1>
-                        <p class="slide-subtitle">Initial System Interface</p>
+                        <h1 class="slide-title">Platform Modules for Wind Asset Monitoring</h1>
+                        <p class="slide-subtitle">Comprehensive Wind Energy Management Structure</p>
                     </div>
                     <div class="slide-content">
                         <div class="slide-image">
                             <div class="image-container">
-                                <img src="img/Screenshot 2025-08-01 115418.png" alt="System Overview" onclick="zoomImage(this)">
+                                <img src="img/portfolio.png" alt="Platform Modules Overview" onclick="zoomImage(this)">
                             </div>
                         </div>
                         <div class="slide-text">
-                            <h3>Key Features</h3>
-                            <p>This screenshot demonstrates the main dashboard interface of the AMS system. The interface provides:</p>
+                            <h3>Overview</h3>
+                            <p>AMS Wind Performance is structured into six key modules:</p>
                             <ul>
-                                <li style="--item-delay: 0s">Clean and intuitive user interface design</li>
-                                <li style="--item-delay: 0.1s">Quick access to main system functions</li>
-                                <li style="--item-delay: 0.2s">Real-time system status indicators</li>
-                                <li style="--item-delay: 0.3s">Navigation menu for easy access to modules</li>
-                                <li style="--item-delay: 0.4s">User authentication and session management</li>
+                                <li style="--item-delay: 0s"><strong>Portfolio</strong> – High-level asset overview</li>
+                                <li style="--item-delay: 0.1s"><strong>State - Portfolio</strong> – Regional analysis</li>
+                                <li style="--item-delay: 0.2s"><strong>Site - Portfolio</strong> – Site-specific insights</li>
+                                <li style="--item-delay: 0.3s"><strong>WTG - Monitoring</strong> – Real-time turbine data</li>
+                                <li style="--item-delay: 0.4s"><strong>BD Analysis</strong> – Breakdown diagnostics</li>
+                                <li style="--item-delay: 0.5s"><strong>Reports</strong> – Data export and analytics</li>
                             </ul>
-                            <p>The system architecture follows modern web design principles with responsive layouts and user-friendly controls.</p>
+                            <p>Each module delivers specific insights into the energy generation lifecycle, performance benchmarks, and reliability of wind turbine operations.</p>
                         </div>
                     </div>
                 </div>
@@ -1379,26 +1619,28 @@
                 <!-- Slide 2 -->
                 <div class="slide">
                     <div class="slide-header">
-                        <h1 class="slide-title">Core Functionality</h1>
-                        <p class="slide-subtitle">Features and Operations</p>
+                        <h1 class="slide-title">Portfolio</h1>
+                        <p class="slide-subtitle">High-level View of Wind Energy Assets</p>
                     </div>
                     <div class="slide-content">
                         <div class="slide-image">
                             <div class="image-container">
-                                <img src="img/Screenshot 2025-08-01 115454.png" alt="Core Functionality" onclick="zoomImage(this)">
+                                <img src="img/portfolio.png" alt="Portfolio Dashboard" onclick="zoomImage(this)">
                             </div>
                         </div>
                         <div class="slide-text">
-                            <h3>Advanced Operations</h3>
-                            <p>This view showcases the core operational features of the AMS system:</p>
+                            <h3>Portfolio Focus</h3>
+                            <p>High-level view of wind energy assets with comprehensive KPIs:</p>
                             <ul>
-                                <li>Data management and processing capabilities</li>
-                                <li>Advanced filtering and search functionality</li>
-                                <li>Real-time data updates and synchronization</li>
-                                <li>Customizable dashboard views</li>
-                                <li>Integration with external systems</li>
+                                <li style="--item-delay: 0s"><strong>WTG Nos</strong> | Total number of turbines</li>
+                                <li style="--item-delay: 0.1s"><strong>Installed Capacity</strong> | MW capacity installed</li>
+                                <li style="--item-delay: 0.2s"><strong>Generation</strong> | MWh generated in selected fiscal period</li>
+                                <li style="--item-delay: 0.3s"><strong>Revenue</strong> | Cr revenue from wind energy</li>
+                                <li style="--item-delay: 0.4s"><strong>CO₂ Saved</strong> | MT of avoided emissions</li>
+                                <li style="--item-delay: 0.5s"><strong>Power vs Wind Speed Graph</strong> | Turbine efficiency analysis</li>
+                                <li style="--item-delay: 0.6s"><strong>Map</strong> | Overall installed capacity across states</li>
+                                <li style="--item-delay: 0.7s"><strong>PLF% Table</strong> | Daily Plant Load Factor per turbine</li>
                             </ul>
-                            <p>The system provides comprehensive tools for managing complex workflows and maintaining data integrity across all operations.</p>
                         </div>
                     </div>
                 </div>
@@ -1406,26 +1648,26 @@
                 <!-- Slide 3 -->
                 <div class="slide">
                     <div class="slide-header">
-                        <h1 class="slide-title">User Interface</h1>
-                        <p class="slide-subtitle">Interactive Components</p>
+                        <h1 class="slide-title">State – Portfolio</h1>
+                        <p class="slide-subtitle">State-wise Performance Breakdown</p>
                     </div>
                     <div class="slide-content">
                         <div class="slide-image">
                             <div class="image-container">
-                                <img src="img/Screenshot 2025-08-01 115505.png" alt="User Interface" onclick="zoomImage(this)">
+                                <img src="img/state.png" alt="State Portfolio Dashboard" onclick="zoomImage(this)">
                             </div>
                         </div>
                         <div class="slide-text">
-                            <h3>Interface Elements</h3>
-                            <p>The user interface demonstrates professional design standards:</p>
+                            <h3>State Portfolio Focus</h3>
+                            <p>State-wise breakdown of wind energy performance:</p>
                             <ul>
-                                <li>Responsive layout that adapts to different screen sizes</li>
-                                <li>Consistent color scheme and typography</li>
-                                <li>Interactive elements with visual feedback</li>
-                                <li>Accessibility features for all users</li>
-                                <li>Optimized workflow patterns</li>
+                                <li style="--item-delay: 0s"><strong>KPIs per State</strong> | Generation, CO₂ Saved, Revenue</li>
+                                <li style="--item-delay: 0.1s"><strong>Map View</strong> | Color-coding by state performance</li>
+                                <li style="--item-delay: 0.2s"><strong>Regional Strengths</strong> | Top performing states</li>
+                                <li style="--item-delay: 0.3s"><strong>Underperformance Identification</strong> | Areas needing attention</li>
+                                <li style="--item-delay: 0.4s"><strong>Comparative Analysis</strong> | State-to-state comparison</li>
                             </ul>
-                            <p>Every component is designed with user experience in mind, ensuring efficient and intuitive operation.</p>
+                            <p>Highlights regional strengths and underperformance areas for strategic decision-making and resource allocation optimization.</p>
                         </div>
                     </div>
                 </div>
@@ -1433,26 +1675,27 @@
                 <!-- Slide 4 -->
                 <div class="slide">
                     <div class="slide-header">
-                        <h1 class="slide-title">Advanced Features</h1>
-                        <p class="slide-subtitle">Enhanced Capabilities</p>
+                        <h1 class="slide-title">Site – Portfolio</h1>
+                        <p class="slide-subtitle">Site-level Deep Dive Analysis</p>
                     </div>
                     <div class="slide-content">
                         <div class="slide-image">
                             <div class="image-container">
-                                <img src="img/Screenshot 2025-08-01 115519.png" alt="Advanced Features" onclick="zoomImage(this)">
+                                <img src="img/site.png" alt="Site Portfolio Interface" onclick="zoomImage(this)">
                             </div>
                         </div>
                         <div class="slide-text">
-                            <h3>Enhanced Functionality</h3>
-                            <p>This section highlights the advanced capabilities of the system:</p>
+                            <h3>Site Portfolio Focus</h3>
+                            <p>Site-level deep dive into individual wind farm performance:</p>
                             <ul>
-                                <li>Advanced analytics and reporting tools</li>
-                                <li>Automated workflow management</li>
-                                <li>Custom field configuration options</li>
-                                <li>Multi-level security and permissions</li>
-                                <li>API integration capabilities</li>
+                                <li style="--item-delay: 0s"><strong>Individual Site Performance</strong> | Detailed site metrics</li>
+                                <li style="--item-delay: 0.1s"><strong>Energy Output</strong> | Site-specific generation data</li>
+                                <li style="--item-delay: 0.2s"><strong>Capacity Analysis</strong> | Installed vs utilized capacity</li>
+                                <li style="--item-delay: 0.3s"><strong>Revenue Tracking</strong> | Site-wise revenue generation</li>
+                                <li style="--item-delay: 0.4s"><strong>Site Comparison</strong> | Detect issues or improvements</li>
+                                <li style="--item-delay: 0.5s"><strong>Status Indicators</strong> | Running, maintenance, fault status</li>
                             </ul>
-                            <p>These features enable organizations to customize the system according to their specific requirements and business processes.</p>
+                            <p>Enables detailed performance monitoring and comparison to optimize operations across multiple wind farm sites.</p>
                         </div>
                     </div>
                 </div>
@@ -1460,26 +1703,27 @@
                 <!-- Slide 5 -->
                 <div class="slide">
                     <div class="slide-header">
-                        <h1 class="slide-title">System Configuration</h1>
-                        <p class="slide-subtitle">Setup and Customization</p>
+                        <h1 class="slide-title">WTG – Monitoring</h1>
+                        <p class="slide-subtitle">Turbine-level Real-time Monitoring</p>
                     </div>
                     <div class="slide-content">
                         <div class="slide-image">
                             <div class="image-container">
-                                <img src="img/Screenshot 2025-08-01 115528.png" alt="System Configuration" onclick="zoomImage(this)">
+                                <img src="img/WTG.png" alt="WTG Monitoring Dashboard" onclick="zoomImage(this)">
                             </div>
                         </div>
                         <div class="slide-text">
-                            <h3>Configuration Options</h3>
-                            <p>The configuration interface provides comprehensive control:</p>
+                            <h3>WTG Monitoring Focus</h3>
+                            <p>Turbine-level real-time monitoring capabilities:</p>
                             <ul>
-                                <li>System-wide settings and preferences</li>
-                                <li>User role and permission management</li>
-                                <li>Data validation and business rules</li>
-                                <li>Integration settings and API configuration</li>
-                                <li>Backup and maintenance scheduling</li>
+                                <li style="--item-delay: 0s"><strong>Live Status</strong> | Real-time status of each WTG</li>
+                                <li style="--item-delay: 0.1s"><strong>Wind Data</strong> | Wind speed and direction data</li>
+                                <li style="--item-delay: 0.2s"><strong>Power Output</strong> | Real-time power output in kW</li>
+                                <li style="--item-delay: 0.3s"><strong>Alerts System</strong> | Faults, alarms, and alerts</li>
+                                <li style="--item-delay: 0.4s"><strong>Maintenance Logs</strong> | Maintenance logs and history</li>
+                                <li style="--item-delay: 0.5s"><strong>Performance Analytics</strong> | Individual turbine performance</li>
                             </ul>
-                            <p>Administrators can fine-tune every aspect of the system to match organizational needs and compliance requirements.</p>
+                            <p>Provides comprehensive real-time visibility into individual turbine operations for proactive maintenance and optimal performance.</p>
                         </div>
                     </div>
                 </div>
@@ -1487,26 +1731,56 @@
                 <!-- Slide 6 -->
                 <div class="slide">
                     <div class="slide-header">
-                        <h1 class="slide-title">Complete Overview</h1>
-                        <p class="slide-subtitle">System Summary</p>
+                        <h1 class="slide-title">BD Analysis</h1>
+                        <p class="slide-subtitle">Failure and Downtime Diagnostics</p>
                     </div>
                     <div class="slide-content">
                         <div class="slide-image">
                             <div class="image-container">
-                                <img src="img/Screenshot 2025-08-01 115537.png" alt="Complete Overview" onclick="zoomImage(this)">
+                                <img src="img/BD.png" alt="BD Analysis Dashboard" onclick="zoomImage(this)">
                             </div>
                         </div>
                         <div class="slide-text">
-                            <h3>System Benefits</h3>
-                            <p>The AMS system provides comprehensive solutions for:</p>
+                            <h3>BD Analysis Focus</h3>
+                            <p>Comprehensive failure and downtime diagnostic capabilities:</p>
                             <ul>
-                                <li>Streamlined business process management</li>
-                                <li>Enhanced data security and compliance</li>
-                                <li>Improved operational efficiency</li>
-                                <li>Scalable architecture for growth</li>
-                                <li>Comprehensive reporting and analytics</li>
+                                <li style="--item-delay: 0s"><strong>Downtime Logs</strong> | Categorized failure tracking</li>
+                                <li style="--item-delay: 0.1s"><strong>Frequency Charts</strong> | Failure frequency analysis</li>
+                                <li style="--item-delay: 0.2s"><strong>Duration Analysis</strong> | Downtime duration tracking</li>
+                                <li style="--item-delay: 0.3s"><strong>MTBF</strong> | Mean Time Between Failures</li>
+                                <li style="--item-delay: 0.4s"><strong>High-Risk Components</strong> | Component failure identification</li>
+                                <li style="--item-delay: 0.5s"><strong>Preventive Maintenance</strong> | Maintenance suggestions</li>
                             </ul>
-                            <p>This system represents a complete solution for modern business management needs, combining functionality with ease of use.</p>
+                            <p>Enables proactive maintenance planning and reduces unplanned downtime through predictive analytics and failure pattern analysis.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 7 -->
+                <div class="slide">
+                    <div class="slide-header">
+                        <h1 class="slide-title">Reports</h1>
+                        <p class="slide-subtitle">Data Export and Presentation Tools</p>
+                    </div>
+                    <div class="slide-content">
+                        <div class="slide-image">
+                            <div class="image-container">
+                                <img src="img/reports.png" alt="Reports Dashboard" onclick="zoomImage(this)">
+                            </div>
+                        </div>
+                        <div class="slide-text">
+                            <h3>Reports Focus</h3>
+                            <p>Comprehensive data export and presentation capabilities:</p>
+                            <ul>
+                                <li style="--item-delay: 0s"><strong>Custom Reports</strong> | Tailored report generation</li>
+                                <li style="--item-delay: 0.1s"><strong>Scheduled Reports</strong> | Automated report delivery</li>
+                                <li style="--item-delay: 0.2s"><strong>Generation Summaries</strong> | Power generation reports</li>
+                                <li style="--item-delay: 0.3s"><strong>Revenue Reports</strong> | Financial performance analysis</li>
+                                <li style="--item-delay: 0.4s"><strong>PLF Summaries</strong> | Plant Load Factor reports</li>
+                                <li style="--item-delay: 0.5s"><strong>Multi-Level Exports</strong> | State, site, or WTG level data</li>
+                                <li style="--item-delay: 0.6s"><strong>Multiple Formats</strong> | PDF, Excel, CSV exports</li>
+                                <li style="--item-delay: 0.7s"><strong>Automation Options</strong> | Email delivery scheduling</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -1515,7 +1789,7 @@
             <div class="controls">
                 <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">❮ Previous</button>
                 <span class="slide-indicator">
-                    <span id="currentSlide">1</span> / <span id="totalSlides">7</span>
+                    <span id="currentSlide">1</span> / <span id="totalSlides">8</span>
                 </span>
                 <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next ❯</button>
                 <button class="nav-btn fullscreen-btn" id="fullscreenBtn" onclick="toggleFullscreen()" title="Toggle Fullscreen (F)">
